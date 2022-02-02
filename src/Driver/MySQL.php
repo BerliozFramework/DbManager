@@ -271,8 +271,8 @@ class MySQL implements DriverInterface, LoggerAwareInterface
     public function beginTransaction()
     {
         if (false === $this->transactionStarted) {
-            $this->transactionStarted = true;
             $this->__call("beginTransaction", func_get_args());
+            $this->transactionStarted = true;
         }
 
         $this->iTransactionStarted++;
@@ -288,8 +288,8 @@ class MySQL implements DriverInterface, LoggerAwareInterface
         $this->iTransactionStarted--;
 
         if (true === $this->transactionStarted && 0 == $this->iTransactionStarted) {
-            $this->transactionStarted = false;
             $this->__call("commit", func_get_args());
+            $this->transactionStarted = false;
         }
     }
 
@@ -301,8 +301,8 @@ class MySQL implements DriverInterface, LoggerAwareInterface
     public function rollBack()
     {
         if (true === $this->transactionStarted) {
-            $this->transactionStarted = false;
             $this->__call("rollback", func_get_args());
+            $this->transactionStarted = false;
         }
 
         $this->iTransactionStarted = 0;
